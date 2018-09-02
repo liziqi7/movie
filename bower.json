@@ -1,0 +1,25 @@
+{
+  "name": "imooc",
+  "description": "0.0.1",
+  "main": "app.js",
+  "authors": [
+    "jsdashi"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "node.js",
+    "MongoDB"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.3.7"
+  }
+}

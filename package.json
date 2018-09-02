@@ -1,0 +1,26 @@
+{
+  "name": "imooc",
+  "version": "1.0.0",
+  "description": "jsdashi imooc movie",
+  "main": "aap.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node.js",
+    "MongoDB"
+  ],
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "bower": "^1.8.4",
+    "express": "^4.15.2",
+    "jade": "^1.11.0",
+    "moment": "^2.18.1",
+    "mongoose": "^4.9.3",
+    "pug": "^2.0.0-beta11",
+    "serve-static": "^1.12.1",
+    "underscore": "^1.8.3"
+  },
+  "author": "jsdashi",
+  "license": "ISC"
+}
