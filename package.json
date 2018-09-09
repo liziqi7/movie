@@ -22,5 +22,10 @@
     "underscore": "^1.8.3"
   },
   "author": "jsdashi",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "grunt-concurrent": "^2.3.1",
+    "grunt-contrib-nodemon": "^0.5.4",
+    "grunt-contrib-watch": "^1.1.0"
+  }
 }
