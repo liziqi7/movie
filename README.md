@@ -47,7 +47,7 @@ window系统推荐使用powersheell 来输入命令。
 * 3.2、 同时，再新开一个命令窗口[cmd]`$ mongo`，就可以用命令来管理数据库，例如：数据的**增删改查**；
 
 
-##### 4、 `bower`：
+##### 4、 bower：
 
 安装bower：`$ npm install -g bower`
 
