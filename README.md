@@ -10,6 +10,7 @@
 * 1.2、 Node.js中文网：[nodejs.cn](http://nodejs.cn/)
 * 1.3、 Node.js中文网提供的下载页：[传送门](http://nodejs.cn/download/)，选择操作系统对应的版本下载。
 * 1.4、 检测Node.js是否安装成功，命令窗口[cmd]`$ node -v`。若出现具体的版本号，表示安装成功。
+
 window系统推荐使用powersheell 来输入命令。
 
 ![使用powersheell 来输入命令](https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/1.png)
