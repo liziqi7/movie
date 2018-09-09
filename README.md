@@ -11,8 +11,8 @@
 * 1.3、 Node.js中文网提供的下载页：[传送门](http://nodejs.cn/download/)，选择操作系统对应的版本下载。
 * 1.4、 检测Node.js是否安装成功，命令窗口[cmd]`$ node -v`。若出现具体的版本号，表示安装成功。
 window系统推荐使用powersheell 来输入命令。
-![使用powersheell 来输入命令](./https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/1.png)
-![Node.js是否安装成功检测](./https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/2.png)
+![使用powersheell 来输入命令](https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/1.png)
+![Node.js是否安装成功检测](https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/2.png)
 
 
 ##### 2、 **安装`MongoDB`**
@@ -21,12 +21,12 @@ window系统推荐使用powersheell 来输入命令。
 * 2.1、 MongoDB中文网：[mongodb.org.cn](http://www.mongodb.org.cn/)
 * 2.2、 MongoDB下载链接：[传送门](https://www.mongodb.com/download-center#atlas)
 * 2.3、 MongoDB中文网教程（包含安装）：[传送门](http://www.mongodb.org.cn/tutorial/)
-*![MongoDB中文网教程](./https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/3.png)
+*![MongoDB中文网教程](https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/3.png)
 * 2.4、 检测MongoDB是否安装成功，命令窗口[cmd]`$ mongo -version`。若出现具体的版本号，表示安装成功。
-![MongoDB安装成功输出信息](./https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/4.png)
+![MongoDB安装成功输出信息](https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/4.png)
 
 * 2.5、 MongoDB安装成功后，将安装路径下的`bin`目录，例如本人的是：`"C:\Program Files\MongoDB\Server\4.0\bin"`添加到系统环境变量，这样便可以直接在命令窗口[cmd]直接执行bin文件里面的命令。
-![bin文件目录](./https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/5.png)
+![bin文件目录](https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/5.png)
 * 2.6、 例如：Windows 7环境变量添加流程。
 计算机(右键)→选择[属性]→选择[高级系统设置]→选择[高级]→点击[环境变量]→ 选择[系统变量]中变量`Pah` 点击[编辑]在末尾添加地址
 ```
@@ -34,13 +34,13 @@ window系统推荐使用powersheell 来输入命令。
 ;C:\Program Files\MongoDB\Server\4.0\bin
 ```
 添加配置之后，记得**重开powersheell 窗口**，验证是否生效。
-![环境变量添加流程](./https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/6.png)
+![环境变量添加流程](https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/6.png)
 
 * 2.7、 设置存储路径，建议在C盘下创建`C:/data/db`目录文件夹，这是MongoDB数据库默认的数据存储路径，但需要手动创建。
 
 ##### 3、 启动`MongoDB`服务：`mongod`
 * 3.1、 如果本地存在`C:/data/db`文件夹，命令窗口[cmd]`$ mongod`，便可开启MongoDB服务，启动后**请勿关闭窗口**;
-![]mongod开启服务](./https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/7.png)
+![]mongod开启服务](https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/7.png)
 * 3.2、 同时，再新开一个命令窗口[cmd]`$ mongo`，就可以用命令来管理数据库，例如：数据的**增删改查**；
 
 
