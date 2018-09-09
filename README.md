@@ -11,7 +11,9 @@
 * 1.3、 Node.js中文网提供的下载页：[传送门](http://nodejs.cn/download/)，选择操作系统对应的版本下载。
 * 1.4、 检测Node.js是否安装成功，命令窗口[cmd]`$ node -v`。若出现具体的版本号，表示安装成功。
 window系统推荐使用powersheell 来输入命令。
+
 ![使用powersheell 来输入命令](https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/1.png)
+
 ![Node.js是否安装成功检测](https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/2.png)
 
 
@@ -21,7 +23,7 @@ window系统推荐使用powersheell 来输入命令。
 * 2.1、 MongoDB中文网：[mongodb.org.cn](http://www.mongodb.org.cn/)
 * 2.2、 MongoDB下载链接：[传送门](https://www.mongodb.com/download-center#atlas)
 * 2.3、 MongoDB中文网教程（包含安装）：[传送门](http://www.mongodb.org.cn/tutorial/)
-*![MongoDB中文网教程](https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/3.png)
+![MongoDB中文网教程](https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/3.png)
 * 2.4、 检测MongoDB是否安装成功，命令窗口[cmd]`$ mongo -version`。若出现具体的版本号，表示安装成功。
 ![MongoDB安装成功输出信息](https://raw.githubusercontent.com/liziqi7/movie/master/screenshots/4.png)
 
