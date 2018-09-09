@@ -2,7 +2,7 @@
 
 > *在线学习的动力来自于无私的分享，如果对您有帮助，请给我个Star。*
 
-此程序基于[慕课网](http://www.imooc.com/learn/75)Scott老师的Node.js+MongoDB建站攻略（第一期）视频教程编写，当前所有模块程序均为最新版本，截止2017年4月，代码中包含详细的注释，非常适合初学者。
+此程序基于慕课网Scott老师的[node+mongodb 建站攻略（一期）](http://www.imooc.com/learn/75)视频教程编写，当前所有模块程序均为最新版本，截止2018年9月，代码中包含详细的注释，非常适合初学者。
 
 #### Demo使用流程
 ##### 1、 **本地环境安装`Node.js`**
@@ -10,40 +10,72 @@
 * 1.2、 Node.js中文网：[nodejs.cn](http://nodejs.cn/)
 * 1.3、 Node.js中文网提供的下载页：[传送门](http://nodejs.cn/download/)，选择操作系统对应的版本下载。
 * 1.4、 检测Node.js是否安装成功，命令窗口[cmd]`$ node -v`。若出现具体的版本号，表示安装成功。
-![Node.js是否安装成功检测](http://ojzaff7fe.bkt.clouddn.com/nodejs%E7%89%88%E6%9C%AC%E6%A3%80%E6%B5%8B.jpg)
+window系统推荐使用powersheell 来输入命令。
+![使用powersheell 来输入命令](./1.png)
+![Node.js是否安装成功检测](./2.png)
+
 
 ##### 2、 **安装`MongoDB`**
+* 2.1、MongoDB官网[www.mongodb.com](https://www.mongodb.com/)
+* 2.2、MongoDB中文社区[www.mongoing.com](http://www.mongoing.com/)
 * 2.1、 MongoDB中文网：[mongodb.org.cn](http://www.mongodb.org.cn/)
 * 2.2、 MongoDB下载链接：[传送门](https://www.mongodb.com/download-center#atlas)
 * 2.3、 MongoDB中文网教程（包含安装）：[传送门](http://www.mongodb.org.cn/tutorial/)
-![MongoDB中文网教程](http://ojzaff7fe.bkt.clouddn.com/mongodb%E6%95%99%E7%A8%8B%EF%BC%88%E5%8C%85%E5%90%AB%E5%AE%89%E8%A3%85%EF%BC%89.jpg)
+*![MongoDB中文网教程](./3.png)
 * 2.4、 检测MongoDB是否安装成功，命令窗口[cmd]`$ mongo -version`。若出现具体的版本号，表示安装成功。
-![MongoDB安装成功输出信息](http://ojzaff7fe.bkt.clouddn.com/mongodb%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F%E8%BE%93%E5%87%BA%E4%BF%A1%E6%81%AF.jpg)
-* 2.5、 MongoDB安装成功后，将安装路径下的`bin`目录，例如博主的是：`"C:\Develop\MongoDB\Server\3.4\bin"`添加到系统环境变量，这样便可以直接在命令窗口[cmd]直接执行bin文件里面的命令。
-![bin文件目录](http://ojzaff7fe.bkt.clouddn.com/mongo-bin-%E7%9B%AE%E5%BD%95.jpg)
-* 2.6、 例如：Windows 10 环境变量添加流程。
-![环境变量添加流程](http://ojzaff7fe.bkt.clouddn.com/%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%B7%BB%E5%8A%A0%E6%B5%81%E7%A8%8B.jpg)
+![MongoDB安装成功输出信息](./4.png)
+
+* 2.5、 MongoDB安装成功后，将安装路径下的`bin`目录，例如本人的是：`"C:\Program Files\MongoDB\Server\4.0\bin"`添加到系统环境变量，这样便可以直接在命令窗口[cmd]直接执行bin文件里面的命令。
+![bin文件目录](./5.png)
+* 2.6、 例如：Windows 7环境变量添加流程。
+计算机(右键)→选择[属性]→选择[高级系统设置]→选择[高级]→点击[环境变量]→ 选择[系统变量]中变量`Pah` 点击[编辑]在末尾添加地址
+```
+//使用英文;分割
+;C:\Program Files\MongoDB\Server\4.0\bin
+```
+添加配置之后，记得**重开powersheell 窗口**，验证是否生效。
+![环境变量添加流程](./6.png)
+
 * 2.7、 设置存储路径，建议在C盘下创建`C:/data/db`目录文件夹，这是MongoDB数据库默认的数据存储路径，但需要手动创建。
 
 ##### 3、 启动`MongoDB`服务：`mongod`
 * 3.1、 如果本地存在`C:/data/db`文件夹，命令窗口[cmd]`$ mongod`，便可开启MongoDB服务，启动后**请勿关闭窗口**;
-![mongod开启服务](http://ojzaff7fe.bkt.clouddn.com/mongod%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.jpg)
+![]mongod开启服务](./7.png)
 * 3.2、 同时，再新开一个命令窗口[cmd]`$ mongo`，就可以用命令来管理数据库，例如：数据的**增删改查**；
-![mongo](http://ojzaff7fe.bkt.clouddn.com/mongo%E6%89%A7%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E5%91%BD%E4%BB%A4.jpg)
 
-##### 4、 安装`bower`依赖：`$ bower install`
-* 4.1、 在Demo项目文件夹下，按住`shift`键的同时按下鼠标右键，选择在此处打开命令窗口，执行命令：`$ bower install`；
-![mongo](http://ojzaff7fe.bkt.clouddn.com/%E9%BC%A0%E6%A0%87%E5%8F%B3%E9%94%AE%E6%89%93%E5%BC%80powershell.jpg)
+
+##### 4、 安装`bower`：`$ npm install -g bower`
+* 4.1、 在movie项目文件夹下，按住`shift`键的同时按下鼠标右键，选择在此处打开命令窗口，执行命令：`$ npm install -g bower`；
+
 
 ##### 5、 安装`npm`依赖：`$ npm install`
-* 5.1、 在Demo项目文件夹下，按住`shift`键的同时按下鼠标右键，选择在此处打开命令窗口，执行命令：`$ npm install`；
+* 5.1、 在movie项目文件夹下，按住`shift`键的同时按下鼠标右键，选择在此处打开命令窗口，执行命令：`$ npm install`；
+
+附：解决npm包慢(失败)方法
+>解决方案是换源.
+```
+# 默认源
+npm config set registry https://registry.npmjs.org
+
+# https -> http，这样网速就会好很多
+npm config set registry http://registry.npmjs.org 
+
+# 如果还不能下载，就切换成淘宝源
+npm config set registry https://registry.npm.taobao.org
+
+# 配置后可通过下面方式来验证是否成功
+npm config get registry
+# 或npm info express
+
+```
+
 
 ##### 6、 启动项目入口文件：`$ node app.js`
-* 6.1、 在Demo项目文件夹下，按住`shift`键的同时按下鼠标右键，选择在此处打开命令窗口，执行命令：`$ node app`；
+* 6.1、 在movie项目文件夹下，按住`shift`键的同时按下鼠标右键，选择在此处打开命令窗口，执行命令：`$ node app`；
 
 ##### 7、 浏览器查看效果
 * 7.1、  `http://localhost:3000`查看首页效果。
 * 7.2、  `http://localhost:3000/admin/list`列表页
 * 7.3、  `http://localhost:3000/admin/movie`后台录入页
 
-**至此，本案例源码使用流程介绍完毕。在此过程遇到问题的同学，请前往[评论区](http://itpoet.cn/2017/12/19/build-movie-website-based-on-nodejs-and-mongodb/)留言。**
+**至此，本案例源码使用流程介绍完毕。在此过程遇到问题的同学，请前往[评论区](https://github.com/liziqi7/movie/issues/)留言。**
