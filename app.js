@@ -1,15 +1,17 @@
 var express = require('express') // 加载express模块
 var path = require('path') // 引入path模块
-
+var cookieParser = require('cookie-parser') //加载cookie模块
+var session = require('express-session') //加载session模块
 var mongoose = require('mongoose') // 加载mongoose模块
-var _ = require('underscore') //_.extend用新对象里的字段替换老的字段
-var Movie = require('./models/movie') // 载入mongoose编译后的模型Movie
-var User = require('./models/user') // 载入mongoose编译后的模型User
+var mongoStore = require('connect-mongo')(session);
+var logger = require('morgan');
 
 var port = process.env.PORT || 3000 // 设置端口号：3000
 var app = express(); // 启动Web服务器
+var dburl = 'mongodb://localhost/imooc';
 // mongoose.connect('mongodb://localhost/imooc')// 老版本链接本地数据库方式
-mongoose.connection.openUri('mongodb://localhost/imooc') //连接mongodb本地数据库imovie
+
+mongoose.connection.openUri(dburl) //连接mongodb本地数据库imovie
 /*  mongoose 简要知识点补充
  * mongoose模块构建在mongodb之上，提供了Schema[模式]、Model[模型]和Document[文档]对象，用起来更为方便。
  * Schema对象定义文档的结构（类似表结构），可以定义字段和类型、唯一性、索引和验证。
@@ -18,179 +20,35 @@ mongoose.connection.openUri('mongodb://localhost/imooc') //连接mongodb本地�
  * mongoose还有Query和Aggregate对象，Query实现查询，Aggregate实现聚合。
  * */
 
-app.set('views', './views/pages') // 设置视图默认的文件路径
+app.set('views', './app/views/pages') // 设置视图默认的文件路径
 app.set('view engine', 'jade') // 设置视图引擎：jade
 var bodyParser = require('body-parser'); // 因后台录入页有提交表单的步骤，故加载此模块方法（bodyParser模块来做文件解析），将表单里的数据进行格式化
 // app.use(express.bodyParser())
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+// // 设置session
+app.use(session({
+    secret: 'imooc',
+    store: new mongoStore({
+        url: dburl,
+        collection: 'sessions'
+    })
+}))
 
-app.use(express.static(path.join(__dirname, 'public'))) //设置静态资源路径
+if ('development' == app.get('env')) {
+    app.set('showStackError', true)
+    // app.use(logger(':method :url :status'))
+    app.locals.pretty = true;
+    mongoose.set('debug', true)
+} 
 
-app.locals.moment = require('moment') // 载入moment模块，格式化日期
+require('./config/routes')(app)
+
+
+
 
 app.listen(port); // 监听 port[3000]端口
-// app.set('port', port)
+app.locals.moment = require('moment') // 载入moment模块，格式化日期
+app.use(express.static(path.join(__dirname, 'public'))) //设置静态资源路径
 
-console.log('imooc started on port ' + port);
-
-// 编写主要页面路由
-// index page 首页
-app.get('/', function(req, res) {
-    Movie.fetch(function(err, movies) {
-        if (err) console.log(err)
-        res.render('index', { // 渲染index 首页
-            title: 'imooc 首页',
-            movies: movies
-        });
-    })
-
-})
-
-//signup
-app.post('/user/signup', function(req, res) {
-    var _user = req.body.user;
-    User.findOne({ name: _user.name }, function(err, user) {
-        if (err) console.log(err);        
-        if (user) {
-            return res.redirect('/')
-        } else {
-            var user = new User(_user)
-            user.save(function(err, user) {
-                if (err) console.log(err)
-                res.redirect('/admin/userlist')
-            })
-        }
-    })
-})
-
-// list page 列表页
-app.get('/admin/userlist', function(req, res) {
-    User.fetch(function(err, users) {
-        if (err) console.log(err)
-        res.render('userlist', {
-            title: 'imooc 用户列表页',
-            users: users
-        });
-    })
-})
-
-//signin
-app.post('/user/signin', function(req, res) {
-    var _user = req.body.user;
-    var name = _user.name;
-    var password = _user.password;
-    User.findOne({ name: name }, function(err, user) {
-        if (err) console.log(err);
-        if (!user) {
-            return res.redirect('/')
-        }
-        console.log(user);
-        user.comparePassword(password, function(err, isMatch) {
-            if (err) console.log(err);
-            console.log(isMatch);
-            if (isMatch) {
-                console.log('Password is matched');
-                return res.redirect('/')
-            } else {
-                console.log('Password is not matched');
-                 return res.redirect('/admin/userlist')
-                // return res.redirect('/')
-            }
-        })
-
-    })
-})
-// detail page 详情页
-app.get('/movie/:id', function(req, res) {
-    var id = req.params.id;
-    Movie.findById(id, function(err, movie) {
-        res.render('detail', {
-            title: 'i_movie' + movie.title,
-            movie: movie
-        });
-    });
-});
-// admin page 后台录入页
-app.get('/admin/movie', function(req, res) {
-    res.render('admin', {
-        title: 'imooc 后台录入页',
-        movie: {
-            title: '',
-            doctor: '',
-            country: '',
-            year: '',
-            poster: '',
-            flash: '',
-            summary: '',
-            language: ''
-        }
-    });
-})
-// admin update movie 后台更新页
-app.get('/admin/update/:id', function(req, res) {
-    var id = req.params.id;
-    if (id) {
-        Movie.findById(id, function(err, movie) {
-            if (err) console.log(err)
-            res.render("admin", {
-                title: 'imooc 后台更新页',
-                movie: movie
-            })
-        })
-    }
-})
-// admin post movie 后台录入提交
-app.post('/admin/movie/new', function(req, res) {
-    var id = req.body.movie._id
-    var movieObj = req.body.movie
-    var _movie;
-    if (id !== "undefined") { // 已经存在的电影数据
-        Movie.findById(id, function(err, movie) {
-            if (err) console.log(err)
-            _movie = _.extend(movie, movieObj); // 用新对象里的字段替换老的字段
-            _movie.save(function(err, movie) {
-                if (err) console.log(err)
-                res.redirect('/movie/' + movie._id)
-            })
-        })
-    } else {
-        _movie = new Movie({
-            title: movieObj.title,
-            doctor: movieObj.doctor,
-            country: movieObj.country,
-            year: movieObj.year,
-            poster: movieObj.poster,
-            flash: movieObj.flash,
-            summary: movieObj.summary,
-            language: movieObj.language
-        })
-        _movie.save(function(err, movie) {
-            if (err) console.log(err)
-            res.redirect('/movie/' + movie._id)
-        })
-    }
-})
-// list page 列表页
-app.get('/admin/list', function(req, res) {
-    Movie.fetch(function(err, movies) {
-        if (err) console.log(err)
-        res.render('list', {
-            title: 'imooc 列表页',
-            movies: movies
-        });
-    })
-})
-// list delete movie data 列表页删除电影
-app.delete('/admin/list', function(req, res) {
-    var id = req.query.id
-
-    if (id) {
-        Movie.remove({ _id: id }, function(err, movie) {
-            if (err) {
-                console.log(err)
-            } else {
-                res.json({ success: 1 })
-            }
-        })
-    }
-})
+// console.log('imooc started on port ' + port);

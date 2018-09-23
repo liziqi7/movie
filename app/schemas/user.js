@@ -7,6 +7,18 @@ var UserSchema = new mongoose.Schema({
         type: String
     },
     password: String,
+    // user
+    // admin
+    // super admin
+    // 0: normal user
+    // 1:verified user
+    // 2:professonal user
+    // >10:admin
+    // >50:super admin
+    role:{
+        type:Number,
+        default:0
+    },
     // meta 更新或录入数据的时间记录
     meta: {
         createAt: {

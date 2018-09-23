@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+  .container
+    .row
+      table.table.table-hover.table-bordered
+        thead
+          tr
+            th 名字
+            th 时间
+        tbody
+          each item in catetories
+            tr(class="item-id-#{item._id}")
+              td #{item.name}
+              td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
+  //- script(src="/js/admin.js")
