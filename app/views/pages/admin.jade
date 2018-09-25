@@ -3,7 +3,7 @@ extends ../layout
 block content
 	.container
 		.row			
-			form.form-horizontal(method="post",action="/admin/movie")
+			form.form-horizontal(method="post",action="/admin/movie",enctyoe="multipart/form-data")
 				.form-group
 					label.col-sm-3.control-lable 豆瓣同步
 					.col-sm-10
@@ -44,6 +44,7 @@ block content
 					label.col-sm-3.control-lable(for="inputPoster") 海报地址
 					.col-sm-10
 						input#inputPoster.form-control(type="text",name="movie[poster]",value=movie.poster)
+				
 				.form-group
 					label.col-sm-3.control-lable(for="inputFlash") 片源地址
 					.col-sm-10

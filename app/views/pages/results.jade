@@ -22,6 +22,6 @@ block content
 									span #{currentPage}
 							-}else{
 								li
-									a(href="/results?p=#{i}&cat=#{catId}") #{i+1}
+									a(href="/results?p=#{i}&#{query}") #{i+1}
 							-}
 						-}
