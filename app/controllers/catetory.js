@@ -7,7 +7,7 @@ exports.new = function(req, res) {
     console.log('req',req);
     res.render('catetory_admin', {
         title: 'imooc 后台分类录入页',
-        catetory:{name:''}
+        catetory:{}
     });
 }
 

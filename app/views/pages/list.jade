@@ -22,8 +22,8 @@ block content
 							td #{item.country}
 							td #{item.year}
 							td #{moment(item.meta.updateAt).format('MM/DD/YYYY')}
-							td: a(traget="_blank",href="../movie/#{item._id}") 查看
-							td: a(traget="_blank",href="../admin/update/#{item._id}") 修改 
+							td: a(traget="_blank",href="/movie/#{item._id}") 查看
+							td: a(traget="_blank",href="/admin/movie/update/#{item._id}") 修改 
 							td
 								buttom.btn.btn-danger.del(type="button",data-id="#{item._id}") 删除
 	script(src="/js/admin.js")		

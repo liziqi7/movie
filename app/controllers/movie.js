@@ -1,6 +1,7 @@
 var Movie = require('../models/movie') // 载入mongoose编译后的模型Movie
 var User = require('../models/user') // 载入mongoose编译后的模型User
-var Comment = require('../models/comment') // 载入mongoose编译后的模型User
+var Catetory = require('../models/catetory') // 载入mongoose编译后的模型Catetory
+var Comment = require('../models/comment') // 载入mongoose编译后的模型Comment
 var _ = require('underscore') //_.extend用新对象里的字段替换老的字段
 // detail page 详情页
 exports.detail = function(req, res) {
@@ -8,7 +9,7 @@ exports.detail = function(req, res) {
     Movie.findById(id, function(err, movie) {
         Comment.find({ movie: id })
             .populate('from', 'name')
-            .populate('reply.from reply.to', 'name')          
+            .populate('reply.from reply.to', 'name')
             .exec(function(err, comments) {
                 res.render('detail', {
                     title: 'i_movie' + movie.title,
@@ -22,29 +23,26 @@ exports.detail = function(req, res) {
 
 // admin page 后台录入页
 exports.new = function(req, res) {
-    res.render('admin', {
-        title: 'imooc 后台录入页',
-        movie: {
-            title: '',
-            doctor: '',
-            country: '',
-            year: '',
-            poster: '',
-            flash: '',
-            summary: '',
-            language: ''
-        }
-    });
+    Catetory.find({}, function(err, catetories) {
+        res.render('admin', {
+            title: 'imooc 后台录入页',
+            catetories: catetories,
+            movie: {}
+        });
+    })
 }
 // admin update movie 后台更新页
 exports.update = function(req, res) {
     var id = req.params.id;
     if (id) {
         Movie.findById(id, function(err, movie) {
-            if (err) console.log(err)
-            res.render("admin", {
-                title: 'imooc 后台更新页',
-                movie: movie
+            Catetory.find({}, function(err, catetories) {
+                if (err) console.log(err)
+                res.render("admin", {
+                    title: 'imooc 后台更新页',
+                    movie: movie,
+                    catetories: catetories
+                })
             })
         })
     }
@@ -54,7 +52,7 @@ exports.save = function(req, res) {
     var id = req.body.movie._id
     var movieObj = req.body.movie
     var _movie;
-    if (id !== "undefined") { // 已经存在的电影数据
+    if (id) { // 已经存在的电影数据
         Movie.findById(id, function(err, movie) {
             if (err) console.log(err)
             _movie = _.extend(movie, movieObj); // 用新对象里的字段替换老的字段
@@ -64,19 +62,40 @@ exports.save = function(req, res) {
             })
         })
     } else {
-        _movie = new Movie({
-            title: movieObj.title,
-            doctor: movieObj.doctor,
-            country: movieObj.country,
-            year: movieObj.year,
-            poster: movieObj.poster,
-            flash: movieObj.flash,
-            summary: movieObj.summary,
-            language: movieObj.language
-        })
+        _movie = new Movie(movieObj);
+        console.log('--------------------');
+        // console.log('_movie', _movie);
+        console.log(movieObj);
+        var catetoryId = movieObj.catetory;
+        var catetoryName = movieObj.catetoryName;
         _movie.save(function(err, movie) {
             if (err) console.log(err)
-            res.redirect('/movie/' + movie._id)
+
+            if (catetoryId) {
+                Catetory.update({ _id: catetoryId }, { $push: { movies: movie._id } }, function(err, catetory) {
+                    if (err) console.log(err);
+                    res.redirect('/movie/' + movie._id)
+                });
+            } else if (catetoryName) {
+                var catetory = new Catetory({
+                    name: catetoryName,
+                    movies: [movie._id]
+                });
+                catetory.save(function(err, catetory) {
+                    if (err) console.log(err);
+                    movie.catetory = catetory._id;
+                    movie.save(function(err, catetory) {
+                        res.redirect('/movie/' + movie._id)
+                    })
+                    
+                })
+            }
+            // Catetory.findById(catetoryId, function(err, catetory) {
+            //     catetory.movies.push(_movie.id);
+            //     catetory.save(function(err, catetory) {
+            //         res.redirect('/movie/' + movie._id)
+            //     })
+            // })
         })
     }
 }
