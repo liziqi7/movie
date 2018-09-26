@@ -3,6 +3,11 @@ var User = require('../models/user') // 载入mongoose编译后的模型User
 var Catetory = require('../models/catetory') // 载入mongoose编译后的模型Catetory
 var Comment = require('../models/comment') // 载入mongoose编译后的模型Comment
 var _ = require('underscore') //_.extend用新对象里的字段替换老的字段
+var fs = require('fs');
+var path = require('path');
+
+
+
 // detail page 详情页
 exports.detail = function(req, res) {
     var id = req.params.id;
@@ -47,11 +52,36 @@ exports.update = function(req, res) {
         })
     }
 }
+exports.savePoster = function(req, res, next) {
+
+    var posterData = req.files.uploadPoster;
+    var filePath = posterData.path;
+    var originalFilename = posterData.originalFilename;
+    if (originalFilename) {
+        fs.readFile(filePath, function(err, data) {
+            var timestamp = Date.now();
+            var type = posterData.type.split('/')[1];
+            var poster = timestamp + '.' + type
+            var newPath = path.join(__dirname, '../../', '/public/upload/' + poster);
+            console.log(newPath);
+            fs.writeFile(newPath, data, function(err) {
+                req.poster = '/upload/' + poster;
+                next();
+            })
+        })
+    } else {
+        next();
+    }
+
+}
 // admin post movie 后台录入提交
 exports.save = function(req, res) {
     var id = req.body.movie._id
     var movieObj = req.body.movie
     var _movie;
+    if (req.poster) {
+        movieObj.poster = req.poster;
+    }
     if (id) { // 已经存在的电影数据
         Movie.findById(id, function(err, movie) {
             if (err) console.log(err)
@@ -87,7 +117,7 @@ exports.save = function(req, res) {
                     movie.save(function(err, catetory) {
                         res.redirect('/movie/' + movie._id)
                     })
-                    
+
                 })
             }
             // Catetory.findById(catetoryId, function(err, catetory) {

@@ -3,6 +3,7 @@ var User = require('../app/controllers/user');
 var Movie = require('../app/controllers/movie');
 var Comment = require('../app/controllers/comment');
 var Catetory = require('../app/controllers/catetory');
+
 module.exports = function(app) {
     // pre handle 
     app.use(function(req, res, next) {
@@ -27,7 +28,7 @@ module.exports = function(app) {
     app.get('/movie/:id', Movie.detail)
     app.get('/admin/movie/new', User.signRequired, User.adminRequired, Movie.new)
     app.get('/admin/movie/update/:id', User.signRequired, User.adminRequired, Movie.update)
-    app.post('/admin/movie', User.signRequired, User.adminRequired, Movie.save)
+    app.post('/admin/movie', User.signRequired, User.adminRequired, Movie.savePoster,Movie.save)
     app.get('/admin/movie/list', User.signRequired, User.adminRequired, Movie.list)
     app.delete('/admin/movie/list', User.signRequired, User.adminRequired, Movie.del)
 

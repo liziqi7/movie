@@ -23,6 +23,12 @@ mongoose.connection.openUri(dburl) //连接mongodb本地数据库imovie
 app.set('views', './app/views/pages') // 设置视图默认的文件路径
 app.set('view engine', 'jade') // 设置视图引擎：jade
 var bodyParser = require('body-parser'); // 因后台录入页有提交表单的步骤，故加载此模块方法（bodyParser模块来做文件解析），将表单里的数据进行格式化
+var multipart = require('connect-multiparty');
+app.use(multipart());
+
+// var multer  = require('multer')
+// app.use(multer());
+// app.use(express.multipart())
 // app.use(express.bodyParser())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
